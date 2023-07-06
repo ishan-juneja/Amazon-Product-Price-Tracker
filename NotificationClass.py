@@ -13,7 +13,7 @@ class Notifier:
         msg = EmailMessage()
         msg['Subject'] = f"Price Drop Alert"
         msg['From'] = email_address
-        msg['To'] = "ishanj101@gmail.com"
+        msg['To'] = "sample@gmail.com"
         msg.set_content(f"Hello!\nWe noticed a major price drop for {product_name} and its now priced at $"
                         f"{product_price}. The link to cop it is at {product_link}")
 

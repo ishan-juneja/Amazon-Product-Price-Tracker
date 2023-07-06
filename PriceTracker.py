@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 
 
 class PriceTracking:
@@ -7,12 +8,18 @@ class PriceTracking:
         self.product_url = product_url
         self.soup = self.getSoup()
 
-    def getSoup(self):
-        web_info = requests.get(self.product_url,
-                                headers={
-                                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-                                    "Accept-Language": "en-US,en;q=0.9"})
 
+    def getSoup(self):
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        ua = UserAgent()
+        hdr = {'User-Agent': ua.random,
+               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+               'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+               'Accept-Encoding': 'none',
+               'Accept-Language': 'en-US,en;q=0.8',
+               'Connection': 'keep-alive'}
+        web_info = requests.get(self.product_url,
+                                headers=hdr)
         return BeautifulSoup(web_info.text, 'html.parser')
 
     def findCurrentPrice(self):
